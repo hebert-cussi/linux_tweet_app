@@ -27,12 +27,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Test basic commands
+        run: |
+          echo "🧪 Testing basic system commands..."
+          pwd
+          ls -la
+          whoami
+          echo "✅ Basic commands work"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '18'  # Hardcoded version
+          #node-version: ${{ env.NODE_VERSION }}
           #cache: 'npm'
       
+      - name: Verify Node.js works
+        run: |
+          echo "✅ Node.js version:"
+          node --version
+          echo "✅ npm version:"
+          npm --version
+      
+      - name: Skip npm commands for now
+        run: |
+          echo "⏭️ Skipping npm commands to isolate the issue"
+          mkdir -p dist
+          echo "Skipped npm build" > dist/skip.txt
+
       - name: Install dependencies
         run: npm install
       
