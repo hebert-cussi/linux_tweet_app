@@ -139,20 +139,7 @@ jobs:
           else
             echo "✅ package.json already exists"
             cat package.json
-          fi
-          mkdir -p test
-          echo "console.log('Running tests...');" > test/sample.test.js
-          echo "import { test } from 'node:test';" >> test/sample.test.js
-          echo "import assert from 'node:assert';" >> test/sample.test.js
-          echo "test('basic test', () => {" >> test/sample.test.js
-          echo "  assert.strictEqual(1, 1);" >> test/sample.test.js
-          echo "});" >> test/sample.test.js
-          echo "" >> test/sample.test.js
-          echo "test('async test', async () => {" >> test/sample.test.js
-          echo "  const result = await Promise.resolve(42);" >> test/sample.test.js
-          echo "  assert.strictEqual(result, 42);" >> test/sample.test.js
-          echo "});" >> test/sample.test.js          
-          echo "✅ Created sample test file"
+          fi          
           echo "✅ Step 5 completed successfully"
 
       - name: Install dependencies
