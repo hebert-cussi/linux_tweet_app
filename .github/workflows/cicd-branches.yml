@@ -61,20 +61,20 @@ jobs:
         id: step5
         run: |
           echo "🧪 STEP 5: Checking for package.json..."
-          if [ -f "package.json" ]; then
-            echo "✅ package.json exists"
-            cat package.json
+          if [ ! -f "package.json" ]; then
+            echo "Creating package.json..."
+            # Use simple echo commands instead of here-document
+            echo '{' > package.json
+            echo '  "name": "linux_tweet_app",' >> package.json
+            echo '  "version": "1.0.0",' >> package.json
+            echo '  "scripts": {' >> package.json
+            echo '    "build": "echo \"Build complete\" && mkdir -p dist && echo \"<h1>Linux Tweet App</h1>\" > dist/index.html"' >> package.json
+            echo '  }' >> package.json
+            echo '}' >> package.json
+            echo "✅ Created package.json"
           else
-            echo "❌ package.json not found - creating basic one"
-            cat > package.json << 'EOF'
-            {
-              "name": "linux_tweet_app",
-              "version": "1.0.0",
-              "scripts": {
-                "build": "echo 'Build complete' && mkdir -p dist && echo '<h1>Hello</h1>' > dist/index.html"
-              }
-            }
-            EOF
+            echo "✅ package.json already exists"
+            cat package.json
           fi
           echo "✅ Step 5 completed successfully"
       
