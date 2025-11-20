@@ -20,85 +20,85 @@ jobs:
   # Se ejecuta SIEMPRE (cualquier rama/evento)
   # ============================================
   build:
-  name: Build Application
-  runs-on: ubuntu-latest
-  
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    name: Build Application
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Step 1 - Basic file operations
+        id: step1
+        run: |
+          echo "🧪 STEP 1: Testing basic file operations..."
+          pwd
+          ls -la
+          echo "✅ Step 1 completed successfully"
       
-    - name: Step 1 - Basic file operations
-      id: step1
-      run: |
-        echo "🧪 STEP 1: Testing basic file operations..."
-        pwd
-        ls -la
-        echo "✅ Step 1 completed successfully"
-    
-    - name: Step 2 - Create directory
-      id: step2
-      run: |
-        echo "🧪 STEP 2: Creating directories..."
-        mkdir -p dist
-        ls -la
-        echo "✅ Step 2 completed successfully"
-    
-    - name: Step 3 - Setup Node.js
-      id: step3
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-    
-    - name: Step 4 - Verify Node.js
-      id: step4
-      run: |
-        echo "🧪 STEP 4: Verifying Node.js..."
-        node --version
-        npm --version
-        echo "✅ Step 4 completed successfully"
-    
-    - name: Step 5 - Check for package.json
-      id: step5
-      run: |
-        echo "🧪 STEP 5: Checking for package.json..."
-        if [ -f "package.json" ]; then
-          echo "✅ package.json exists"
-          cat package.json
-        else
-          echo "❌ package.json not found - creating basic one"
-          cat > package.json << 'EOF'
-          {
-            "name": "linux_tweet_app",
-            "version": "1.0.0",
-            "scripts": {
-              "build": "echo 'Build complete' && mkdir -p dist && echo '<h1>Hello</h1>' > dist/index.html"
+      - name: Step 2 - Create directory
+        id: step2
+        run: |
+          echo "🧪 STEP 2: Creating directories..."
+          mkdir -p dist
+          ls -la
+          echo "✅ Step 2 completed successfully"
+      
+      - name: Step 3 - Setup Node.js
+        id: step3
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Step 4 - Verify Node.js
+        id: step4
+        run: |
+          echo "🧪 STEP 4: Verifying Node.js..."
+          node --version
+          npm --version
+          echo "✅ Step 4 completed successfully"
+      
+      - name: Step 5 - Check for package.json
+        id: step5
+        run: |
+          echo "🧪 STEP 5: Checking for package.json..."
+          if [ -f "package.json" ]; then
+            echo "✅ package.json exists"
+            cat package.json
+          else
+            echo "❌ package.json not found - creating basic one"
+            cat > package.json << 'EOF'
+            {
+              "name": "linux_tweet_app",
+              "version": "1.0.0",
+              "scripts": {
+                "build": "echo 'Build complete' && mkdir -p dist && echo '<h1>Hello</h1>' > dist/index.html"
+              }
             }
-          }
-          EOF
-        fi
-        echo "✅ Step 5 completed successfully"
-    
-    - name: Step 6 - Try npm install
-      id: step6
-      run: |
-        echo "🧪 STEP 6: Attempting npm install..."
-        npm install --loglevel=verbose
-        echo "✅ Step 6 completed successfully"
-    
-    - name: Step 7 - Try build
-      id: step7
-      run: |
-        echo "🧪 STEP 7: Attempting build..."
-        npm run build
-        echo "✅ Step 7 completed successfully"
-    
-    - name: Upload build artifact
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifact
-        path: dist/
-        retention-days: 1
+            EOF
+          fi
+          echo "✅ Step 5 completed successfully"
+      
+      - name: Step 6 - Try npm install
+        id: step6
+        run: |
+          echo "🧪 STEP 6: Attempting npm install..."
+          npm install --loglevel=verbose
+          echo "✅ Step 6 completed successfully"
+      
+      - name: Step 7 - Try build
+        id: step7
+        run: |
+          echo "🧪 STEP 7: Attempting build..."
+          npm run build
+          echo "✅ Step 7 completed successfully"
+      
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: dist/
+          retention-days: 1
 
   # ============================================
   # JOB 2: TEST
