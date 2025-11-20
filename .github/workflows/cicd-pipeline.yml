@@ -1,0 +1,47 @@
+name: CI/CD Fake Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Simular Build
+        run: |
+          echo "Iniciando etapa de BUILD..."
+          echo "Compilando aplicación..."
+          echo "Build completado con éxito."
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Simular Tests
+        run: |
+          echo "Iniciando etapa de TEST..."
+          echo "Ejecutando pruebas unitarias..."
+          echo "Todos los tests pasaron ✔️."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Simular Deploy
+        run: |
+          echo "Iniciando etapa de DEPLOY..."
+          echo "Empaquetando artefactos..."
+          echo "Enviando aplicación al servidor..."
+          echo "Deploy realizado con éxito 🚀."
